@@ -22,3 +22,4 @@ frontend/coverage/
 .cursor/commands/*
 !.cursor/commands/create-pd-incident.md
 !.cursor/commands/get-pd-incidents.md
+!.cursor/commands/send-incident-summary.md
