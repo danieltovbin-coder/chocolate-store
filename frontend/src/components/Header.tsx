@@ -7,6 +7,7 @@ import { useState } from "react";
 import { buttonVariants, Button } from "@/components/ui/button";
 import { CartDrawer } from "@/components/CartDrawer";
 import { useShop } from "@/context/shop-state";
+import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/shop", label: "Shop" },
@@ -38,10 +39,10 @@ export function Header() {
           {links.map((l) => (
             <Link
               key={l.href}
-              className={buttonVariants({
-                variant: "ghost",
-                className: "font-mono text-xs tracking-widest uppercase",
-              })}
+              className={cn(
+                buttonVariants({ variant: "ghost" }),
+                "font-mono text-xs tracking-widest uppercase"
+              )}
               href={l.href}
             >
               {l.label}
@@ -80,10 +81,10 @@ export function Header() {
             {links.map((l) => (
               <Link
                 key={l.href}
-                className={buttonVariants({
-                  variant: "ghost",
-                  className: "justify-start font-mono text-xs tracking-widest uppercase",
-                })}
+                className={cn(
+                  buttonVariants({ variant: "ghost" }),
+                  "justify-start font-mono text-xs tracking-widest uppercase"
+                )}
                 href={l.href}
                 onClick={() => setMobile(false)}
               >
