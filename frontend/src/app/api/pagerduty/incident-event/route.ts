@@ -270,8 +270,3 @@ export async function POST(request: Request) {
 
   return Response.json({ ok: true });
 }
-
-export const testExports = {
-  formatSlackSummary,
-  normalizeSummary,
-};
