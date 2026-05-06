@@ -13,8 +13,8 @@ import {
   Suspense,
 } from "react";
 
-import { fetchChocolates } from "@/lib/api";
-import { ChocolateCard } from "@/components/ChocolateCard";
+import { fetchCandies } from "@/lib/api";
+import { CandyCard } from "@/components/CandyCard";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -24,12 +24,10 @@ const sorts = [
   { value: "name", label: "Name" },
   { value: "price_asc", label: "Price ↑" },
   { value: "price_desc", label: "Price ↓" },
-  { value: "cacao_desc", label: "Cacao %" },
 ] as const;
 
 const TAG_GROUP_ORDER = [
-  "Chocolate type",
-  "Cacao",
+  "Candy type",
   "Flavors",
   "Inclusions & diet",
   "Texture & format",
@@ -39,35 +37,34 @@ const TAG_GROUP_ORDER = [
 type TagGroupLabel = (typeof TAG_GROUP_ORDER)[number];
 
 const TAG_GROUP_TYPE = new Set(
-  ["dark", "milk", "white", "ruby", "single-origin"] satisfies string[]
+  ["gummy", "jelly", "licorice", "taffy", "lollipop", "hard-candy", "marshmallow", "caramel"] satisfies string[]
 );
 const TAG_GROUP_FLAVOR = new Set(
   [
     "caramel",
     "salt",
-    "fruity",
     "fruit",
     "citrus",
     "mint",
     "spicy",
-    "nutty",
+    "apple",
+    "strawberry",
+    "vanilla",
+    "cola",
+    "maple",
+    "tropical",
   ] satisfies string[]
 );
 const TAG_GROUP_INCLUSION = new Set(
-  ["praline", "almond", "hazelnut", "nibs", "vegan"] satisfies string[]
+  ["gift", "assorted"] satisfies string[]
 );
 const TAG_GROUP_FORMAT = new Set(
-  ["textured", "bites", "truffle", "spread", "classic", "gift"] satisfies string[]
+  ["chewy", "soft", "fizzy", "sour"] satisfies string[]
 );
-
-function isCacaoPercentageTag(tag: string): boolean {
-  return /^\d{1,3}%$/.test(tag);
-}
 
 function tagGroupLabel(tag: string): TagGroupLabel {
   const key = tag.toLowerCase();
-  if (TAG_GROUP_TYPE.has(key)) return "Chocolate type";
-  if (isCacaoPercentageTag(tag)) return "Cacao";
+  if (TAG_GROUP_TYPE.has(key)) return "Candy type";
   if (TAG_GROUP_FLAVOR.has(key)) return "Flavors";
   if (TAG_GROUP_INCLUSION.has(key)) return "Inclusions & diet";
   if (TAG_GROUP_FORMAT.has(key)) return "Texture & format";
@@ -76,8 +73,7 @@ function tagGroupLabel(tag: string): TagGroupLabel {
 
 function groupSortedTags(tags: string[]): { label: TagGroupLabel; tags: string[] }[] {
   const buckets: Record<TagGroupLabel, string[]> = {
-    "Chocolate type": [],
-    Cacao: [],
+    "Candy type": [],
     Flavors: [],
     "Inclusions & diet": [],
     "Texture & format": [],
@@ -244,8 +240,8 @@ function ShopContent() {
   }, [sp]);
 
   const { data: catalogForTags, isPending: tagsCatalogPending } = useQuery({
-    queryKey: ["chocolates", "all-for-tag-picker", { sort: "name" as const }],
-    queryFn: () => fetchChocolates({ sort: "name" }),
+    queryKey: ["candies", "all-for-tag-picker", { sort: "name" as const }],
+    queryFn: () => fetchCandies({ sort: "name" }),
     staleTime: 60_000,
   });
   const tagOptions = useMemo(
@@ -257,9 +253,9 @@ function ShopContent() {
   );
 
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ["chocolates", { tags: tagQ.slice().sort(), sort: sortQ }],
+    queryKey: ["candies", { tags: tagQ.slice().sort(), sort: sortQ }],
     queryFn: () =>
-      fetchChocolates({
+      fetchCandies({
         tags: tagQ.length ? tagQ : undefined,
         sort: sortQ,
       }),
@@ -288,7 +284,7 @@ function ShopContent() {
       <div className="mb-8">
         <h1 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Shop</h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          Filter by flavor notes and origin, then sort to find your next favorite bar.
+          Filter by candy style and flavor notes, then sort to find your next favorite treat.
         </p>
       </div>
       <div className="mb-6 flex flex-col gap-4 rounded-xl border border-border/70 bg-gradient-to-b from-card/90 to-muted/30 p-4 shadow-sm sm:flex-row sm:items-end sm:gap-4 dark:from-card/80 dark:to-muted/20">
@@ -342,7 +338,7 @@ function ShopContent() {
         </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {data?.map((c) => <ChocolateCard key={c.id} chocolate={c} />)}
+          {data?.map((c) => <CandyCard key={c.id} candy={c} />)}
         </div>
       )}
       {!isLoading && data?.length === 0 ? (

@@ -1,6 +1,6 @@
-# chocolate store
+# candy store
 
-A field-engineer friendly demo: browse a chocolate marketplace, save items, use a local cart, and run a **mock** checkout. No user accounts. **Next.js 15 (App Router + Tailwind + shadcn/ui)**, **FastAPI**, **Postgres** (user-level `pg_ctl`, project-local data dir), **Redis** (user-level `redis-server`, local port), all in **dev mode with hot reload**.
+A field-engineer friendly demo: browse a candy marketplace, save items, use a local cart, and run a **mock** checkout. No user accounts. **Next.js 15 (App Router + Tailwind + shadcn/ui)**, **FastAPI**, **Postgres** (user-level `pg_ctl`, project-local data dir), **Redis** (user-level `redis-server`, local port), all in **dev mode with hot reload**.
 
 ## Prerequisites
 
@@ -69,8 +69,8 @@ Optional **in-app Dev mode** (toggle in the UI) can open a **Cursor Cloud agent*
 
 1. Run `make dev`, open the shop, add an item, open the cart sheet, and place a **mock** order. Show **Network** for `POST /api/checkout` and the success page. Optional: `make psql` and `select * from orders;`.
 2. Change copy or layout in `frontend/src/app/shop/page.tsx` and save — Fast Refresh should update immediately.
-3. Tweak a response in `backend/app/routers/chocolates.py` (e.g. an extra field on the Pydantic model) — `uvicorn --reload` should pick it up; refresh the list.
-4. In Redis CLI, run `KEYS chocolates:*` after loading `/api/chocolates` twice to show server-side list caching.
+3. Tweak a response in `backend/app/routers/candies.py` (e.g. an extra field on the Pydantic model) — `uvicorn --reload` should pick it up; refresh the list.
+4. In Redis CLI, run `KEYS candies:*` after loading `/api/candies` twice to show server-side list caching.
 5. `Ctrl-C` to prove nothing is left on the ports: `lsof -i :55432 -i :63790 -i :8000 -i :3000` should be empty (after any browser tabs close; Next may need a second for cleanup).
 
 ## Layout

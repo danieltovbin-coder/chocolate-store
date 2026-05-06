@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { fetchChocolates, postCheckout } from "@/lib/api";
+import { fetchCandies, postCheckout } from "@/lib/api";
 import { buttonVariants, Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,13 +20,13 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState("");
 
   const { data: products, isLoading } = useQuery({
-    queryKey: ["chocolates", "all"],
-    queryFn: () => fetchChocolates(),
+    queryKey: ["candies", "all"],
+    queryFn: () => fetchCandies(),
     enabled: cart.length > 0,
   });
   const byId = new Map(products?.map((p) => [p.id, p]) ?? []);
   const subtotal = cart.reduce((sum, l) => {
-    const p = byId.get(l.chocolateId);
+    const p = byId.get(l.candyId);
     return p ? sum + p.price_cents * l.quantity : sum;
   }, 0);
 
@@ -79,7 +79,7 @@ export default function CheckoutPage() {
             customer_name: name.trim(),
             customer_email: email.trim(),
             items: cart.map((l) => ({
-              chocolate_id: l.chocolateId,
+              candy_id: l.candyId,
               quantity: l.quantity,
             })),
           });

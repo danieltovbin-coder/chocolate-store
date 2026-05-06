@@ -12,7 +12,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from app.cache import get_redis, close_redis
 from app.db import engine, AsyncSessionFactory
-from app.routers import checkout, chocolates
+from app.routers import checkout, candies
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
 
 
 app = FastAPI(
-    title="chocolate store API",
+    title="candy store API",
     version="0.1.0",
     lifespan=lifespan,
 )
@@ -42,7 +42,7 @@ app.add_middleware(
 )
 
 app.include_router(
-    chocolates.router, prefix="/api/chocolates", tags=["chocolates"]
+    candies.router, prefix="/api/candies", tags=["candies"]
 )
 app.include_router(
     checkout.router, prefix="/api", tags=["checkout"]

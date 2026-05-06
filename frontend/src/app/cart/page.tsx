@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { fetchChocolates } from "@/lib/api";
+import { fetchCandies } from "@/lib/api";
 import { formatPrice } from "@/lib/format";
 import { buttonVariants, Button } from "@/components/ui/button";
 import { useShop } from "@/context/shop-state";
@@ -14,13 +14,13 @@ export default function CartPage() {
   const router = useRouter();
   const { cart, setQty, removeFromCart, clearCart } = useShop();
   const { data: products, isLoading } = useQuery({
-    queryKey: ["chocolates", "all"],
-    queryFn: () => fetchChocolates(),
+    queryKey: ["candies", "all"],
+    queryFn: () => fetchCandies(),
     enabled: cart.length > 0,
   });
   const byId = new Map(products?.map((p) => [p.id, p]) ?? []);
   const subtotal = cart.reduce((sum, l) => {
-    const p = byId.get(l.chocolateId);
+    const p = byId.get(l.candyId);
     return p ? sum + p.price_cents * l.quantity : sum;
   }, 0);
 
@@ -33,7 +33,7 @@ export default function CartPage() {
           href="/shop"
           className={buttonVariants({ className: "mt-6" })}
         >
-          Browse chocolates
+          Browse candies
         </Link>
       </div>
     );
@@ -50,19 +50,19 @@ export default function CartPage() {
       ) : null}
       <ul className="divide-y divide-border/60 overflow-hidden rounded-xl border border-border/70 bg-card shadow-sm ring-1 ring-black/[0.04] dark:ring-white/[0.06]">
         {cart.map((l) => {
-          const p = byId.get(l.chocolateId);
+          const p = byId.get(l.candyId);
           if (!p) {
             return (
-              <li key={l.chocolateId} className="flex items-center justify-between p-4">
+              <li key={l.candyId} className="flex items-center justify-between p-4">
                 <span className="text-sm">Unknown product</span>
-                <Button type="button" variant="link" onClick={() => removeFromCart(l.chocolateId)}>
+                <Button type="button" variant="link" onClick={() => removeFromCart(l.candyId)}>
                   Remove
                 </Button>
               </li>
             );
           }
           return (
-            <li key={l.chocolateId} className="flex flex-wrap items-center gap-4 bg-card/40 p-4 transition-colors hover:bg-muted/20 dark:hover:bg-muted/10">
+            <li key={l.candyId} className="flex flex-wrap items-center gap-4 bg-card/40 p-4 transition-colors hover:bg-muted/20 dark:hover:bg-muted/10">
               <Image
                 src={p.image_url}
                 width={80}
@@ -87,9 +87,9 @@ export default function CartPage() {
                   max={99}
                   className="h-9 w-20 rounded-lg border border-input bg-card/50 px-2 text-sm shadow-sm outline-none transition-[border-color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40 dark:bg-input/20"
                   value={l.quantity}
-                  onChange={(e) => setQty(l.chocolateId, Number(e.target.value) || 0)}
+                  onChange={(e) => setQty(l.candyId, Number(e.target.value) || 0)}
                 />
-                <Button type="button" variant="ghost" onClick={() => removeFromCart(l.chocolateId)}>
+                <Button type="button" variant="ghost" onClick={() => removeFromCart(l.candyId)}>
                   Remove
                 </Button>
               </div>

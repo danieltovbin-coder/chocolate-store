@@ -10,7 +10,7 @@ from starlette.testclient import TestClient
 
 os.environ.setdefault(
     "DATABASE_URL",
-    "postgresql+asyncpg://chocolate@127.0.0.1:55432/chocolate_store",
+    "postgresql+asyncpg://candy@127.0.0.1:55432/candy_store",
 )
 os.environ.setdefault("REDIS_URL", "redis://127.0.0.1:63790/0")
 

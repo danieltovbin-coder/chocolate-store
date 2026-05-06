@@ -18,8 +18,8 @@ if [ -f .env ]; then
 fi
 
 : "${PG_PORT:=55432}"
-: "${PG_USER:=chocolate}"
-: "${PG_DB:=chocolate_store}"
+: "${PG_USER:=candy}"
+: "${PG_DB:=candy_store}"
 : "${REDIS_PORT:=63790}"
 
 # Drop the app DB so nothing persists between runs (demo app).

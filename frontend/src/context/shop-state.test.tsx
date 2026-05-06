@@ -52,7 +52,7 @@ describe("ShopProvider", () => {
   it("rehydrates cart from localStorage when ready", async () => {
     localStorage.setItem(
       "cs.cart.v1",
-      JSON.stringify([{ chocolateId: "x", quantity: 3 }])
+      JSON.stringify([{ candyId: "x", quantity: 3 }])
     );
 
     const { container } = render(
@@ -94,7 +94,7 @@ describe("ShopProvider", () => {
     );
 
     const stored = JSON.parse(localStorage.getItem("cs.cart.v1") || "[]");
-    expect(stored).toEqual([{ chocolateId: "c1", quantity: 4 }]);
+    expect(stored).toEqual([{ candyId: "c1", quantity: 4 }]);
   });
 
   it("toggleSaved updates saved list", async () => {
@@ -124,9 +124,9 @@ describe("ShopProvider", () => {
     localStorage.setItem(
       "cs.cart.v1",
       JSON.stringify([
-        { chocolateId: "c1", quantity: 1 },
-        { chocolateId: "c2", quantity: 1 },
-        { chocolateId: "c3", quantity: 1 },
+        { candyId: "c1", quantity: 1 },
+        { candyId: "c2", quantity: 1 },
+        { candyId: "c3", quantity: 1 },
       ])
     );
 
@@ -146,9 +146,9 @@ describe("ShopProvider", () => {
     await waitFor(() => {
       const cart = JSON.parse(view.getByTestId("cart").textContent || "[]");
       expect(cart).toEqual([
-        { chocolateId: "c1", quantity: 1 },
-        { chocolateId: "c2", quantity: 5 },
-        { chocolateId: "c3", quantity: 1 },
+        { candyId: "c1", quantity: 1 },
+        { candyId: "c2", quantity: 5 },
+        { candyId: "c3", quantity: 1 },
       ]);
     });
   });
@@ -157,9 +157,9 @@ describe("ShopProvider", () => {
     localStorage.setItem(
       "cs.cart.v1",
       JSON.stringify([
-        { chocolateId: "c1", quantity: 1 },
-        { chocolateId: "c2", quantity: 1 },
-        { chocolateId: "c3", quantity: 1 },
+        { candyId: "c1", quantity: 1 },
+        { candyId: "c2", quantity: 1 },
+        { candyId: "c3", quantity: 1 },
       ])
     );
 
@@ -179,9 +179,9 @@ describe("ShopProvider", () => {
     await waitFor(() => {
       const cart = JSON.parse(view.getByTestId("cart").textContent || "[]");
       expect(cart).toEqual([
-        { chocolateId: "c1", quantity: 1 },
-        { chocolateId: "c2", quantity: 2 },
-        { chocolateId: "c3", quantity: 1 },
+        { candyId: "c1", quantity: 1 },
+        { candyId: "c2", quantity: 2 },
+        { candyId: "c3", quantity: 1 },
       ]);
     });
   });

@@ -1,12 +1,12 @@
-import type { CheckoutPayload, CheckoutResponse, Chocolate } from "@/lib/types";
+import type { CheckoutPayload, CheckoutResponse, Candy } from "@/lib/types";
 
 const base = () => process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
 
-export async function fetchChocolates(params?: {
+export async function fetchCandies(params?: {
   tags?: string[];
   sort?: string;
-}): Promise<Chocolate[]> {
-  const u = new URL("/api/chocolates", base());
+}): Promise<Candy[]> {
+  const u = new URL("/api/candies", base());
   if (params?.tags?.length) {
     for (const t of params.tags) {
       if (t) u.searchParams.append("tag", t);
@@ -14,17 +14,17 @@ export async function fetchChocolates(params?: {
   }
   if (params?.sort) u.searchParams.set("sort", params.sort);
   const res = await fetch(u.toString(), { cache: "no-store" });
-  if (!res.ok) throw new Error("Failed to load chocolates");
-  return res.json() as Promise<Chocolate[]>;
+  if (!res.ok) throw new Error("Failed to load candies");
+  return res.json() as Promise<Candy[]>;
 }
 
-export async function fetchChocolate(id: string): Promise<Chocolate> {
-  const res = await fetch(`${base()}/api/chocolates/${id}`, {
+export async function fetchCandy(id: string): Promise<Candy> {
+  const res = await fetch(`${base()}/api/candies/${id}`, {
     cache: "no-store",
   });
   if (res.status === 404) throw new Error("Not found");
-  if (!res.ok) throw new Error("Failed to load chocolate");
-  return res.json() as Promise<Chocolate>;
+  if (!res.ok) throw new Error("Failed to load candy");
+  return res.json() as Promise<Candy>;
 }
 
 export async function postCheckout(

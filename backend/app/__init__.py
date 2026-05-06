@@ -1,1 +1,1 @@
-"""chocolate-store FastAPI application."""
+"""candy-store FastAPI application."""

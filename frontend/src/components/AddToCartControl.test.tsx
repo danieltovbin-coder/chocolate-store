@@ -25,7 +25,7 @@ describe("AddToCartControl", () => {
     const { container } = render(
       <ShopProvider>
         <AddToCartControl
-          chocolateId="c99"
+          candyId="c99"
           productName="Test Bar"
           inStock
           isReady
@@ -48,7 +48,7 @@ describe("AddToCartControl", () => {
     render(
       <ShopProvider>
         <AddToCartControl
-          chocolateId="c1"
+          candyId="c1"
           productName="X"
           inStock={false}
           isReady
@@ -70,7 +70,7 @@ describe("AddToCartControl", () => {
     const { container } = render(
       <ShopProvider>
         <AddToCartControl
-          chocolateId="c2"
+          candyId="c2"
           productName="Y"
           inStock
           isReady

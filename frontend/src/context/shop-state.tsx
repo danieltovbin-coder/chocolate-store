@@ -18,11 +18,11 @@ type ShopState = {
   cart: CartLine[];
   saved: string[];
   isReady: boolean;
-  setQty: (chocolateId: string, quantity: number) => void;
-  addToCart: (chocolateId: string, quantity?: number) => void;
-  removeFromCart: (chocolateId: string) => void;
+  setQty: (candyId: string, quantity: number) => void;
+  addToCart: (candyId: string, quantity?: number) => void;
+  removeFromCart: (candyId: string) => void;
   clearCart: () => void;
-  toggleSaved: (chocolateId: string) => void;
+  toggleSaved: (candyId: string) => void;
   isSaved: (id: string) => boolean;
 };
 
@@ -44,7 +44,7 @@ function writeLocal<T>(key: string, v: T) {
   localStorage.setItem(key, JSON.stringify(v));
   // Defer custom event: avoids same-tab storage sync running inside a setState updater (React 19 strict double-invoke).
   queueMicrotask(() => {
-    window.dispatchEvent(new Event("chocolate-store-storage"));
+    window.dispatchEvent(new Event("candy-store-storage"));
   });
 }
 
@@ -72,20 +72,20 @@ export function ShopProvider({ children }: { children: React.ReactNode }) {
       setSaved(readLocal<string[]>(SAVED_KEY, []));
     };
     window.addEventListener("storage", onStorage);
-    window.addEventListener("chocolate-store-storage", onCustom);
+    window.addEventListener("candy-store-storage", onCustom);
     return () => {
       window.removeEventListener("storage", onStorage);
-      window.removeEventListener("chocolate-store-storage", onCustom);
+      window.removeEventListener("candy-store-storage", onCustom);
     };
   }, []);
 
-  const setQty = useCallback((chocolateId: string, quantity: number) => {
+  const setQty = useCallback((candyId: string, quantity: number) => {
     setCart((prev) => {
-      const index = prev.findIndex((l) => l.chocolateId === chocolateId);
+      const index = prev.findIndex((l) => l.candyId === candyId);
       let next: CartLine[] = prev;
 
       if (index === -1) {
-        next = quantity <= 0 ? prev : [...prev, { chocolateId, quantity }];
+        next = quantity <= 0 ? prev : [...prev, { candyId, quantity }];
       } else if (quantity <= 0) {
         next = prev.filter((_, i) => i !== index);
       } else {
@@ -100,13 +100,13 @@ export function ShopProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const addToCart = useCallback(
-    (chocolateId: string, quantity = 1) => {
+    (candyId: string, quantity = 1) => {
       setCart((prev) => {
-        const index = prev.findIndex((l) => l.chocolateId === chocolateId);
+        const index = prev.findIndex((l) => l.candyId === candyId);
         let next: CartLine[] = prev;
 
         if (index === -1) {
-          next = quantity <= 0 ? prev : [...prev, { chocolateId, quantity }];
+          next = quantity <= 0 ? prev : [...prev, { candyId, quantity }];
         } else {
           const q = prev[index].quantity + quantity;
           if (q <= 0) {
@@ -125,9 +125,9 @@ export function ShopProvider({ children }: { children: React.ReactNode }) {
     []
   );
 
-  const removeFromCart = useCallback((chocolateId: string) => {
+  const removeFromCart = useCallback((candyId: string) => {
     setCart((prev) => {
-      const next = prev.filter((l) => l.chocolateId !== chocolateId);
+      const next = prev.filter((l) => l.candyId !== candyId);
       writeLocal(CART_KEY, next);
       return next;
     });
