@@ -36,25 +36,6 @@ const HIGH_PRIORITY_VALUES = new Set([
   "urgent",
 ]);
 
-const LOW_PRIORITY_VALUES = new Set([
-  "low",
-  "medium",
-  "moderate",
-  "normal",
-  "info",
-  "informational",
-  "sev2",
-  "sev3",
-  "sev4",
-  "severity 2",
-  "severity 3",
-  "severity 4",
-  "p2",
-  "p3",
-  "p4",
-  "p5",
-]);
-
 function stringValue(value: unknown): string {
   if (typeof value === "string") {
     return value.trim();
