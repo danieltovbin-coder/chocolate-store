@@ -5,7 +5,7 @@ import { Heart } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
-import { fetchChocolate } from "@/lib/api";
+import { fetchCandy } from "@/lib/api";
 import { formatPrice } from "@/lib/format";
 import { AddToCartControl } from "@/components/AddToCartControl";
 import { Badge } from "@/components/ui/badge";
@@ -20,8 +20,8 @@ export default function ProductDetailPage() {
   const { toggleSaved, isSaved, isReady } = useShop();
 
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ["chocolate", id],
-    queryFn: () => fetchChocolate(id),
+    queryKey: ["candy", id],
+    queryFn: () => fetchCandy(id),
     enabled: Boolean(id),
   });
   const saved = data && isSaved(data.id);
@@ -70,12 +70,7 @@ export default function ProductDetailPage() {
       <div className="flex flex-col">
         <h1 className="font-heading text-3xl font-semibold tracking-tight sm:text-[2rem]">{c.name}</h1>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          {c.origin ? `${c.origin} · ` : null}
-          {c.cacao_percentage != null
-            ? c.cacao_percentage === 0
-              ? "No cacao (white or spread)"
-              : `${c.cacao_percentage}% cacao`
-            : "Cacao n/a"}
+          {c.origin ?? "Sweet shop"}
         </p>
         <p className="mt-4 font-heading text-2xl font-semibold tabular-nums">{formatPrice(c.price_cents)}</p>
         <div className="mt-4 flex flex-wrap gap-1.5">
@@ -88,7 +83,7 @@ export default function ProductDetailPage() {
         <p className="mt-6 max-w-prose leading-relaxed text-muted-foreground">{c.description}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <AddToCartControl
-            chocolateId={c.id}
+            candyId={c.id}
             productName={c.name}
             inStock={c.in_stock}
             isReady={isReady}

@@ -4,7 +4,7 @@ import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import type { Chocolate } from "@/lib/types";
+import type { Candy } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
 import { AddToCartControl } from "@/components/AddToCartControl";
 import { Badge } from "@/components/ui/badge";
@@ -13,10 +13,10 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { useShop } from "@/context/shop-state";
 
 type Props = {
-  chocolate: Chocolate;
+  candy: Candy;
 };
 
-export function ChocolateCard({ chocolate: c }: Props) {
+export function CandyCard({ candy: c }: Props) {
   const { toggleSaved, isSaved, isReady } = useShop();
   const saved = isSaved(c.id);
 
@@ -45,14 +45,7 @@ export function ChocolateCard({ chocolate: c }: Props) {
           >
             {c.name}
           </Link>
-          <p className="text-sm text-muted-foreground">
-            {c.origin ?? "—"}
-            {c.cacao_percentage != null && c.cacao_percentage > 0
-              ? ` · ${c.cacao_percentage}%`
-              : c.cacao_percentage === 0
-                ? " · white"
-                : null}
-          </p>
+          <p className="text-sm text-muted-foreground">{c.origin ?? "Sweet shop"}</p>
         </div>
       </CardHeader>
       <CardContent className="p-3 pt-2">
@@ -69,7 +62,7 @@ export function ChocolateCard({ chocolate: c }: Props) {
       </CardContent>
       <CardFooter className="flex gap-2 p-3">
         <AddToCartControl
-          chocolateId={c.id}
+          candyId={c.id}
           productName={c.name}
           inStock={c.in_stock}
           isReady={isReady}

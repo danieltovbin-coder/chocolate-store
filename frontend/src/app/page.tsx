@@ -4,15 +4,15 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-import { fetchChocolates } from "@/lib/api";
-import { ChocolateCard } from "@/components/ChocolateCard";
+import { fetchCandies } from "@/lib/api";
+import { CandyCard } from "@/components/CandyCard";
 import { buttonVariants, Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function HomePage() {
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ["chocolates", "all"],
-    queryFn: () => fetchChocolates(),
+    queryKey: ["candies", "all"],
+    queryFn: () => fetchCandies(),
   });
   const featured = data?.slice(0, 4) ?? [];
 
@@ -32,11 +32,11 @@ export default function HomePage() {
             New spring collection
           </p>
           <h1 className="mt-4 max-w-3xl font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-[2.35rem] md:leading-tight">
-            Single-origin chocolate, delivered to your door
+            Colorful candy, delivered to your door
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            Small-batch bars and truffles from growers in Peru, Madagascar, and Ecuador.
-            Ethically sourced, freshly made, and shipped within 48 hours of leaving the kitchen.
+            Small-batch gummies, taffy, lollipops, and hard candies made for bright, nostalgic snacking.
+            Freshly packed and shipped within 48 hours of leaving the kitchen.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -76,7 +76,7 @@ export default function HomePage() {
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {featured.map((c) => (
-            <ChocolateCard key={c.id} chocolate={c} />
+            <CandyCard key={c.id} candy={c} />
           ))}
         </div>
       )}

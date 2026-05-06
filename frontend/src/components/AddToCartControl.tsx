@@ -10,7 +10,7 @@ import { toast } from "sonner";
 const MAX_QTY = 99;
 
 type Props = {
-  chocolateId: string;
+  candyId: string;
   productName: string;
   inStock: boolean;
   isReady: boolean;
@@ -19,7 +19,7 @@ type Props = {
 };
 
 export function AddToCartControl({
-  chocolateId,
+  candyId,
   productName,
   inStock,
   isReady,
@@ -28,7 +28,7 @@ export function AddToCartControl({
 }: Props) {
   const { cart, addToCart, setQty } = useShop();
   const qty =
-    cart.find((l) => l.chocolateId === chocolateId)?.quantity ?? 0;
+    cart.find((l) => l.candyId === candyId)?.quantity ?? 0;
 
   const addDisabled = !inStock || !isReady;
   const canIncrement = qty < MAX_QTY;
@@ -41,7 +41,7 @@ export function AddToCartControl({
         size={size === "sm" ? "sm" : "lg"}
         disabled={addDisabled}
         onClick={() => {
-          addToCart(chocolateId, 1);
+          addToCart(candyId, 1);
           toast("Added to cart", {
             description: productName,
             position: "bottom-left",
@@ -80,7 +80,7 @@ export function AddToCartControl({
         className="shrink-0 border-transparent bg-transparent shadow-none hover:bg-muted/80"
         aria-label="Decrease quantity"
         disabled={!isReady}
-        onClick={() => setQty(chocolateId, qty - 1)}
+        onClick={() => setQty(candyId, qty - 1)}
       >
         <Minus className="size-4" />
       </Button>
@@ -100,7 +100,7 @@ export function AddToCartControl({
         className="shrink-0 border-transparent bg-transparent shadow-none hover:bg-muted/80"
         aria-label="Increase quantity"
         disabled={!isReady || !canIncrement}
-        onClick={() => setQty(chocolateId, Math.min(MAX_QTY, qty + 1))}
+        onClick={() => setQty(candyId, Math.min(MAX_QTY, qty + 1))}
       >
         <Plus className="size-4" />
       </Button>

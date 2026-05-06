@@ -1,7 +1,7 @@
 [project]
-name = "chocolate-store-api"
+name = "candy-store-api"
 version = "0.1.0"
-description = "FastAPI backend for the chocolate store demo"
+description = "FastAPI backend for the candy store demo"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [

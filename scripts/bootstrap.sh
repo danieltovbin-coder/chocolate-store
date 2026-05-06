@@ -6,7 +6,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 export PGPORT="${PG_PORT:-55432}"
-export PGUSER="${PG_USER:-chocolate}"
+export PGUSER="${PG_USER:-candy}"
 
 # shellcheck source=/dev/null
 source "$ROOT/scripts/postgres-path.sh"

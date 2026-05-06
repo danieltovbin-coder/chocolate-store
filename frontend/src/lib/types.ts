@@ -1,10 +1,9 @@
-export type Chocolate = {
+export type Candy = {
   id: string;
   name: string;
   slug: string;
   description: string;
   origin: string | null;
-  cacao_percentage: number | null;
   price_cents: number;
   image_url: string;
   tags: string[];
@@ -13,14 +12,14 @@ export type Chocolate = {
 };
 
 export type CartLine = {
-  chocolateId: string;
+  candyId: string;
   quantity: number;
 };
 
 export type CheckoutPayload = {
   customer_name: string;
   customer_email: string;
-  items: { chocolate_id: string; quantity: number }[];
+  items: { candy_id: string; quantity: number }[];
 };
 
 export type CheckoutResponse = {

@@ -5,8 +5,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db
-from app.models.chocolate import Chocolate, Order, OrderItem
-from app.schemas.chocolate import CheckoutIn, CheckoutOut
+from app.models.candy import Candy, Order, OrderItem
+from app.schemas.candy import CheckoutIn, CheckoutOut
 
 router = APIRouter()
 
@@ -34,12 +34,12 @@ async def checkout(
 
         for line in body.items:
             res = await session.execute(
-                select(Chocolate).where(Chocolate.id == line.chocolate_id)
+                select(Candy).where(Candy.id == line.candy_id)
             )
             ch = res.scalar_one_or_none()
             if ch is None:
                 raise HTTPException(
-                    status_code=400, detail=f"Unknown chocolate {line.chocolate_id}"
+                    status_code=400, detail=f"Unknown candy {line.candy_id}"
                 )
             if not ch.in_stock:
                 raise HTTPException(
@@ -51,7 +51,7 @@ async def checkout(
             session.add(
                 OrderItem(
                     order_id=order.id,
-                    chocolate_id=ch.id,
+                    candy_id=ch.id,
                     quantity=line.quantity,
                     unit_price_cents=ch.price_cents,
                 )

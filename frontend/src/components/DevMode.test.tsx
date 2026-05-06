@@ -81,7 +81,7 @@ const MOCK_HISTORY_AGENTS = [
       runId: "run-bc-1",
       status: "finished",
       createdAt: 1_699_910_000_000,
-      outputSummary: "Shipped the chocolate checkout fix.",
+      outputSummary: "Shipped the candy checkout fix.",
       eventPreview: ["User: Hello", "Assistant: Done."],
     },
   },
@@ -501,7 +501,7 @@ describe("DevMode", () => {
       within(cards[0]!).getByTestId("dev-mode-agent-history-latest-run")
     ).toHaveTextContent("run-bc-1");
     expect(
-      within(cards[0]!).getByText(/Shipped the chocolate checkout fix/)
+      within(cards[0]!).getByText(/Shipped the candy checkout fix/)
     ).toBeInTheDocument();
     expect(
       within(cards[1]!).getByTestId("dev-mode-agent-history-no-run")

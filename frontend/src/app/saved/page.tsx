@@ -3,8 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-import { fetchChocolates } from "@/lib/api";
-import { ChocolateCard } from "@/components/ChocolateCard";
+import { fetchCandies } from "@/lib/api";
+import { CandyCard } from "@/components/CandyCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useShop } from "@/context/shop-state";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,8 @@ import { Button } from "@/components/ui/button";
 export default function SavedPage() {
   const { saved } = useShop();
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ["chocolates", "all"],
-    queryFn: () => fetchChocolates(),
+    queryKey: ["candies", "all"],
+    queryFn: () => fetchCandies(),
   });
 
   const list = useMemo(() => {
@@ -47,7 +47,7 @@ export default function SavedPage() {
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c) => (
-            <ChocolateCard key={c.id} chocolate={c} />
+            <CandyCard key={c.id} candy={c} />
           ))}
         </div>
       )}

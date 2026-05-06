@@ -1,12 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
-  fetchChocolate,
-  fetchChocolates,
+  fetchCandy,
+  fetchCandies,
   postCheckout,
 } from "@/lib/api";
 
-describe("fetchChocolates", () => {
+describe("fetchCandies", () => {
   beforeEach(() => {
     vi.stubGlobal(
       "fetch",
@@ -23,22 +23,22 @@ describe("fetchChocolates", () => {
     const fetchMock = vi.mocked(globalThis.fetch);
     vi.stubEnv("NEXT_PUBLIC_API_URL", "http://api.test");
 
-    await fetchChocolates({ tags: ["dark", "milk"] });
+    await fetchCandies({ tags: ["gummy", "chewy"] });
 
     const url = String(fetchMock.mock.calls[0]?.[0]);
-    expect(url).toContain("http://api.test/api/chocolates");
-    expect(url).toContain("tag=dark");
-    expect(url).toContain("tag=milk");
+    expect(url).toContain("http://api.test/api/candies");
+    expect(url).toContain("tag=gummy");
+    expect(url).toContain("tag=chewy");
   });
 
   it("sends one tag param for a single selected tag", async () => {
     const fetchMock = vi.mocked(globalThis.fetch);
     vi.stubEnv("NEXT_PUBLIC_API_URL", "http://api.test");
 
-    await fetchChocolates({ tags: ["dark"] });
+    await fetchCandies({ tags: ["gummy"] });
 
     const url = String(fetchMock.mock.calls[0]?.[0]);
-    expect(url).toContain("tag=dark");
+    expect(url).toContain("tag=gummy");
     expect(url.split("tag=").length).toBe(2);
   });
 
@@ -47,11 +47,11 @@ describe("fetchChocolates", () => {
       new Response("", { status: 500 })
     );
 
-    await expect(fetchChocolates()).rejects.toThrow("Failed to load chocolates");
+    await expect(fetchCandies()).rejects.toThrow("Failed to load candies");
   });
 });
 
-describe("fetchChocolate", () => {
+describe("fetchCandy", () => {
   beforeEach(() => {
     vi.stubGlobal(
       "fetch",
@@ -71,7 +71,7 @@ describe("fetchChocolate", () => {
       new Response("", { status: 404 })
     );
 
-    await expect(fetchChocolate("abc")).rejects.toThrow("Not found");
+    await expect(fetchCandy("abc")).rejects.toThrow("Not found");
   });
 });
 
@@ -97,7 +97,7 @@ describe("postCheckout", () => {
     const body = {
       customer_name: "A",
       customer_email: "a@b.co",
-      items: [{ chocolate_id: "00000000-0000-4000-8000-000000000001", quantity: 1 }],
+      items: [{ candy_id: "00000000-0000-4000-8000-000000000001", quantity: 1 }],
     };
     const out = await postCheckout(body);
     expect(out.order_id).toBe("o1");
@@ -114,7 +114,7 @@ describe("postCheckout", () => {
         customer_name: "A",
         customer_email: "a@b.co",
         items: [
-          { chocolate_id: "00000000-0000-4000-8000-000000000001", quantity: 1 },
+          { candy_id: "00000000-0000-4000-8000-000000000001", quantity: 1 },
         ],
       })
     ).rejects.toThrow("bad");

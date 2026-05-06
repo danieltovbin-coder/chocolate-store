@@ -5,13 +5,12 @@ from typing import List, Optional
 from pydantic import BaseModel, EmailStr, Field
 
 
-class ChocolateOut(BaseModel):
+class CandyOut(BaseModel):
     id: uuid.UUID
     name: str
     slug: str
     description: str
     origin: Optional[str] = None
-    cacao_percentage: Optional[int] = None
     price_cents: int
     image_url: str
     tags: List[str]
@@ -22,7 +21,7 @@ class ChocolateOut(BaseModel):
 
 
 class CartLineIn(BaseModel):
-    chocolate_id: uuid.UUID
+    candy_id: uuid.UUID
     quantity: int = Field(ge=1, le=99)
 
 

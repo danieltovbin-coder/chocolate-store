@@ -22,8 +22,8 @@ else
 fi
 
 : "${PG_PORT:=55432}"
-: "${PG_USER:=chocolate}"
-: "${PG_DB:=chocolate_store}"
+: "${PG_USER:=candy}"
+: "${PG_DB:=candy_store}"
 : "${REDIS_PORT:=63790}"
 
 export PGPORT="$PG_PORT"
@@ -75,7 +75,7 @@ psql -h 127.0.0.1 -p "$PG_PORT" -U "$PG_USER" -d postgres -v ON_ERROR_STOP=1 \
   -c "DROP DATABASE IF EXISTS \"$PG_DB\";" \
   -c "CREATE DATABASE \"$PG_DB\";"
 
-# Flush stale cache entries that reference chocolates from a previous run
+# Flush stale cache entries that reference candies from a previous run
 redis-cli -p "$REDIS_PORT" FLUSHALL >/dev/null
 
 # Create schema from models and insert seed rows

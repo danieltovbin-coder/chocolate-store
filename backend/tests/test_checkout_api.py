@@ -18,7 +18,7 @@ def _set_in_stock_sync(cid: uuid.UUID, in_stock: bool) -> None:
     try:
         with eng.begin() as conn:
             conn.execute(
-                text("UPDATE chocolates SET in_stock = :flag WHERE id = :cid"),
+                text("UPDATE candies SET in_stock = :flag WHERE id = :cid"),
                 {"flag": in_stock, "cid": cid},
             )
     finally:
@@ -26,14 +26,14 @@ def _set_in_stock_sync(cid: uuid.UUID, in_stock: bool) -> None:
 
 
 def test_checkout_success(api_client: TestClient) -> None:
-    listed = api_client.get("/api/chocolates")
+    listed = api_client.get("/api/candies")
     assert listed.status_code == 200
     ch = listed.json()[0]
 
     payload = {
         "customer_name": "Test User",
         "customer_email": "test@example.com",
-        "items": [{"chocolate_id": ch["id"], "quantity": 2}],
+        "items": [{"candy_id": ch["id"], "quantity": 2}],
     }
     r = api_client.post("/api/checkout", json=payload)
     assert r.status_code == 200
@@ -42,12 +42,12 @@ def test_checkout_success(api_client: TestClient) -> None:
     assert out["total_cents"] == ch["price_cents"] * 2
 
 
-def test_checkout_unknown_chocolate(api_client: TestClient) -> None:
+def test_checkout_unknown_candy(api_client: TestClient) -> None:
     bad_id = str(uuid.uuid4())
     payload = {
         "customer_name": "Test User",
         "customer_email": "test@example.com",
-        "items": [{"chocolate_id": bad_id, "quantity": 1}],
+        "items": [{"candy_id": bad_id, "quantity": 1}],
     }
     r = api_client.post("/api/checkout", json=payload)
     assert r.status_code == 400
@@ -55,7 +55,7 @@ def test_checkout_unknown_chocolate(api_client: TestClient) -> None:
 
 
 def test_checkout_out_of_stock(api_client: TestClient) -> None:
-    listed = api_client.get("/api/chocolates")
+    listed = api_client.get("/api/candies")
     assert listed.status_code == 200
     ch = listed.json()[0]
     cid = uuid.UUID(str(ch["id"]))
@@ -65,7 +65,7 @@ def test_checkout_out_of_stock(api_client: TestClient) -> None:
         payload = {
             "customer_name": "Test User",
             "customer_email": "test@example.com",
-            "items": [{"chocolate_id": str(cid), "quantity": 1}],
+            "items": [{"candy_id": str(cid), "quantity": 1}],
         }
         r = api_client.post("/api/checkout", json=payload)
         assert r.status_code == 400

@@ -11,8 +11,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.models.base import Base
 
 
-class Chocolate(Base):
-    __tablename__ = "chocolates"
+class Candy(Base):
+    __tablename__ = "candies"
 
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
@@ -21,7 +21,6 @@ class Chocolate(Base):
     slug: Mapped[str] = mapped_column(String(200), unique=True, nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
     origin: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
-    cacao_percentage: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     price_cents: Mapped[int] = mapped_column(Integer, nullable=False)
     image_url: Mapped[str] = mapped_column(String(2000), nullable=False)
     tags: Mapped[List[str]] = mapped_column(
@@ -32,7 +31,7 @@ class Chocolate(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
 
-    order_items: Mapped[List["OrderItem"]] = relationship(back_populates="chocolate")
+    order_items: Mapped[List["OrderItem"]] = relationship(back_populates="candy")
 
 
 class Order(Base):
@@ -63,11 +62,11 @@ class OrderItem(Base):
     order_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("orders.id", ondelete="CASCADE"), nullable=False, index=True
     )
-    chocolate_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("chocolates.id"), nullable=False, index=True
+    candy_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("candies.id"), nullable=False, index=True
     )
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)
     unit_price_cents: Mapped[int] = mapped_column(Integer, nullable=False)
 
     order: Mapped["Order"] = relationship(back_populates="items")
-    chocolate: Mapped["Chocolate"] = relationship(back_populates="order_items")
+    candy: Mapped["Candy"] = relationship(back_populates="order_items")

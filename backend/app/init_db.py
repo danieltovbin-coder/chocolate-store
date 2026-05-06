@@ -8,7 +8,7 @@ import asyncio
 
 from app.db import AsyncSessionFactory, engine
 from app.models.base import Base
-from app.models.chocolate import Chocolate
+from app.models.candy import Candy
 from app.seed import SEED, slugify
 
 
@@ -19,12 +19,11 @@ async def _run() -> None:
     async with AsyncSessionFactory() as session:
         for row in SEED:
             session.add(
-                Chocolate(
+                Candy(
                     name=row["name"],
                     slug=slugify(row["name"]),
                     description=row["description"],
                     origin=row.get("origin"),
-                    cacao_percentage=row.get("cacao_percentage"),
                     price_cents=row["price_cents"],
                     image_url=row["image_url"],
                     tags=row["tags"],
@@ -34,7 +33,7 @@ async def _run() -> None:
         await session.commit()
 
     await engine.dispose()
-    print(f"init_db: created schema and inserted {len(SEED)} chocolates")
+    print(f"init_db: created schema and inserted {len(SEED)} candies")
 
 
 def main() -> None:

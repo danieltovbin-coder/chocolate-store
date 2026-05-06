@@ -5,7 +5,7 @@ import { ArrowRight, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { fetchChocolates } from "@/lib/api";
+import { fetchCandies } from "@/lib/api";
 import { formatPrice } from "@/lib/format";
 import { buttonVariants, Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
@@ -19,14 +19,14 @@ type Props = {
 export function CartDrawer({ open, onOpenChange }: Props) {
   const { cart, setQty, removeFromCart, clearCart } = useShop();
   const { data: products, isLoading } = useQuery({
-    queryKey: ["chocolates", "all"],
-    queryFn: () => fetchChocolates(),
+    queryKey: ["candies", "all"],
+    queryFn: () => fetchCandies(),
     enabled: open && cart.length > 0,
   });
 
   const byId = new Map(products?.map((p) => [p.id, p]) ?? []);
   const subtotal = cart.reduce((sum, l) => {
-    const p = byId.get(l.chocolateId);
+    const p = byId.get(l.candyId);
     return p ? sum + p.price_cents * l.quantity : sum;
   }, 0);
 
@@ -44,10 +44,10 @@ export function CartDrawer({ open, onOpenChange }: Props) {
             <p className="text-sm text-muted-foreground">No items yet.</p>
           ) : (
             cart.map((l) => {
-              const p = byId.get(l.chocolateId);
+              const p = byId.get(l.candyId);
               return (
                 <div
-                  key={l.chocolateId}
+                  key={l.candyId}
                   className="flex gap-3 rounded-lg border-b border-border/50 pb-3 last:border-0"
                 >
                   {p ? (
@@ -76,7 +76,7 @@ export function CartDrawer({ open, onOpenChange }: Props) {
                         className="h-8 w-16 rounded-lg border border-input bg-card/50 px-2 text-sm shadow-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 dark:bg-input/20"
                         value={l.quantity}
                         onChange={(e) =>
-                          setQty(l.chocolateId, Number(e.target.value) || 0)
+                          setQty(l.candyId, Number(e.target.value) || 0)
                         }
                         aria-label="Quantity"
                       />
@@ -84,7 +84,7 @@ export function CartDrawer({ open, onOpenChange }: Props) {
                         type="button"
                         size="icon"
                         variant="ghost"
-                        onClick={() => removeFromCart(l.chocolateId)}
+                        onClick={() => removeFromCart(l.candyId)}
                         aria-label="Remove"
                       >
                         <Trash2 className="size-4" />
