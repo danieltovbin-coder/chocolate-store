@@ -36,7 +36,28 @@ function slackWebhookUrl(): string {
   );
 }
 
+function notificationSecret(): string {
+  return process.env.INCIDENT_NOTIFICATION_SECRET?.trim() || "";
+}
+
+function authorizationToken(request: Request): string {
+  const header = request.headers.get("authorization") ?? "";
+  const match = /^Bearer\s+(.+)$/i.exec(header);
+  return match?.[1]?.trim() ?? "";
+}
+
 export async function POST(request: Request) {
+  const secret = notificationSecret();
+  if (!secret) {
+    return Response.json(
+      { error: "INCIDENT_NOTIFICATION_SECRET must be set" },
+      { status: 503 }
+    );
+  }
+  if (authorizationToken(request) !== secret) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   let body: unknown;
   try {
     body = await request.json();

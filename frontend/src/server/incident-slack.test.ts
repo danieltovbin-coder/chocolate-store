@@ -32,6 +32,13 @@ describe("incident Slack notifications", () => {
         pagerduty_incident_urgency: "high",
       })
     ).toBe(true);
+    expect(
+      isHighPriorityIncident({
+        ...baseIncident,
+        pagerduty_incident_title: "[High] Chocolate checkout latency",
+        pagerduty_incident_priority: "P3",
+      })
+    ).toBe(true);
   });
 
   it("does not notify for medium priority incidents", () => {
@@ -58,5 +65,16 @@ describe("incident Slack notifications", () => {
     expect(message).toContain("token=[REDACTED]");
     expect(message).toContain("Authorization: Bearer [REDACTED]");
     expect(message).not.toContain("secret-token");
+  });
+
+  it("escapes Slack control syntax in incident text", () => {
+    const message = formatIncidentSlackMessage({
+      ...baseIncident,
+      pagerduty_incident_title: "[High] <!channel> checkout & carts <down>",
+    });
+
+    expect(message).toContain("&lt;!channel&gt;");
+    expect(message).toContain("checkout &amp; carts &lt;down&gt;");
+    expect(message).not.toContain("<!channel>");
   });
 });

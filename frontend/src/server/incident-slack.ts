@@ -78,6 +78,13 @@ function redacted(text: string): string {
     .replace(/[A-Za-z0-9+/]{48,}={0,2}/g, "[REDACTED]");
 }
 
+function slackText(text: string): string {
+  return redacted(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 function normalizeSignal(signal: string): string {
   return signal
     .trim()
@@ -116,15 +123,10 @@ export function normalizeIncident(input: IncidentNotificationInput): NormalizedI
 
 export function isHighPriorityIncident(input: IncidentNotificationInput): boolean {
   const incident = normalizeIncident(input);
+  const normalizedSignals = incident.prioritySignals.map(normalizeSignal);
 
-  for (const rawSignal of incident.prioritySignals) {
-    const signal = normalizeSignal(rawSignal);
-    if (HIGH_PRIORITY_VALUES.has(signal)) {
-      return true;
-    }
-    if (LOW_PRIORITY_VALUES.has(signal)) {
-      return false;
-    }
+  if (normalizedSignals.some((signal) => HIGH_PRIORITY_VALUES.has(signal))) {
+    return true;
   }
 
   return false;
@@ -134,20 +136,20 @@ export function formatIncidentSlackMessage(input: IncidentNotificationInput): st
   const incident = normalizeIncident(input);
   const lines = [
     "*High-priority PagerDuty incident event*",
-    `*Event:* ${redacted(incident.eventType || "unknown")}`,
-    `*Incident:* ${redacted(incident.title || "Untitled incident")}`,
-    `*Status:* ${redacted(incident.status || "unknown")}`,
-    `*Service:* ${redacted(incident.serviceName || "unknown")}${incident.serviceId ? ` (${redacted(incident.serviceId)})` : ""}`,
+    `*Event:* ${slackText(incident.eventType || "unknown")}`,
+    `*Incident:* ${slackText(incident.title || "Untitled incident")}`,
+    `*Status:* ${slackText(incident.status || "unknown")}`,
+    `*Service:* ${slackText(incident.serviceName || "unknown")}${incident.serviceId ? ` (${slackText(incident.serviceId)})` : ""}`,
   ];
 
   if (incident.prioritySignals.length > 0) {
-    lines.push(`*Priority signal:* ${redacted(incident.prioritySignals.join(", "))}`);
+    lines.push(`*Priority signal:* ${slackText(incident.prioritySignals.join(", "))}`);
   }
   if (incident.id) {
-    lines.push(`*Incident ID:* ${redacted(incident.id)}`);
+    lines.push(`*Incident ID:* ${slackText(incident.id)}`);
   }
   if (incident.url) {
-    lines.push(`*Link:* ${redacted(incident.url)}`);
+    lines.push(`*Link:* ${slackText(incident.url)}`);
   }
 
   return lines.join("\n");

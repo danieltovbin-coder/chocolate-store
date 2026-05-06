@@ -4,10 +4,13 @@ import { POST } from "./route";
 
 const REQUEST_URL = "http://localhost/api/incidents/slack";
 
-function makeRequest(body: unknown): Request {
+function makeRequest(body: unknown, token = "test-secret"): Request {
   return new Request(REQUEST_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(body),
   });
 }
@@ -19,7 +22,37 @@ describe("POST /api/incidents/slack", () => {
     vi.restoreAllMocks();
   });
 
+  it("requires the notification secret", async () => {
+    const response = await POST(
+      makeRequest({
+        pagerduty_incident_title: "[High] Checkout is down",
+      })
+    );
+
+    expect(response.status).toBe(503);
+    await expect(response.json()).resolves.toEqual({
+      error: "INCIDENT_NOTIFICATION_SECRET must be set",
+    });
+  });
+
+  it("rejects requests without the bearer secret", async () => {
+    vi.stubEnv("INCIDENT_NOTIFICATION_SECRET", "test-secret");
+
+    const response = await POST(
+      makeRequest(
+        {
+          pagerduty_incident_title: "[High] Checkout is down",
+        },
+        "wrong-secret"
+      )
+    );
+
+    expect(response.status).toBe(401);
+    await expect(response.json()).resolves.toEqual({ error: "Unauthorized" });
+  });
+
   it("skips non-high-priority incident events", async () => {
+    vi.stubEnv("INCIDENT_NOTIFICATION_SECRET", "test-secret");
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
 
@@ -41,6 +74,7 @@ describe("POST /api/incidents/slack", () => {
   });
 
   it("posts a Slack summary for high-priority incident events", async () => {
+    vi.stubEnv("INCIDENT_NOTIFICATION_SECRET", "test-secret");
     vi.stubEnv("INCIDENT_SLACK_WEBHOOK_URL", "https://hooks.slack.com/services/test");
     const fetchMock = vi.fn(async () => new Response("ok", { status: 200 }));
     vi.stubGlobal("fetch", fetchMock);
@@ -72,6 +106,7 @@ describe("POST /api/incidents/slack", () => {
   });
 
   it("returns a configuration error before posting high-priority events", async () => {
+    vi.stubEnv("INCIDENT_NOTIFICATION_SECRET", "test-secret");
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
 
