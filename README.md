@@ -65,6 +65,8 @@ Copy and edit [`.env.example`](./.env.example) to `.env` (done automatically on 
 
 Optional **in-app Dev mode** (toggle in the UI) can open a **Cursor Cloud agent** via the Next.js route [`frontend/src/app/api/dev-mode/agent/route.ts`](./frontend/src/app/api/dev-mode/agent/route.ts). Set **`CURSOR_API_KEY`** (server-only; get a key from [Cursor Dashboard → Integrations](https://cursor.com/dashboard/integrations)). Optionally set **`CURSOR_DEV_MODE_REPO_URL`** to an HTTPS GitHub repo URL connected to your team; otherwise the handler tries `git remote get-url origin` from the repo root. With Dev mode enabled, the sidebar **History** tab lists cloud agents via the TypeScript SDK (`GET` on the same route), including a **latest-run output preview** per agent (extra SDK calls server-side).
 
+Optional **high-priority incident Slack notifications** can be sent by posting PagerDuty automation trigger context to [`frontend/src/app/api/incidents/slack/route.ts`](./frontend/src/app/api/incidents/slack/route.ts). Set server-only **`INCIDENT_SLACK_WEBHOOK_URL`** (or **`SLACK_WEBHOOK_URL`**) to an incoming Slack webhook. The route posts only events classified as high priority from PagerDuty urgency/priority/severity fields or a title prefix such as `[High]` or `[Critical]`; medium and lower events are ignored.
+
 ## Suggested “Cursor as a field engineer” demo
 
 1. Run `make dev`, open the shop, add an item, open the cart sheet, and place a **mock** order. Show **Network** for `POST /api/checkout` and the success page. Optional: `make psql` and `select * from orders;`.
