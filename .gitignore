@@ -21,4 +21,5 @@ frontend/coverage/
 !.cursor/commands/
 .cursor/commands/*
 !.cursor/commands/create-pd-incident.md
+!.cursor/commands/create-demo.md
 !.cursor/commands/get-pd-incidents.md
