@@ -1,3 +1,4 @@
+/** @vitest-environment node */
 import type { Run, SDKAgent, SDKMessage } from "@cursor/sdk";
 import { afterEach, describe, expect, it, vi } from "vitest";
 

@@ -8,6 +8,7 @@ export type Chocolate = {
   price_cents: number;
   image_url: string;
   tags: string[];
+  tasting_notes: string[];
   in_stock: boolean;
   created_at: string;
 };

@@ -27,6 +27,11 @@ class Chocolate(Base):
     tags: Mapped[List[str]] = mapped_column(
         ARRAY(String(64)), server_default=text("'{}'")
     )
+    tasting_notes: Mapped[List[str]] = mapped_column(
+        ARRAY(String(64)),
+        nullable=False,
+        server_default=text("'{}'"),
+    )
     in_stock: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False

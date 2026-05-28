@@ -18,32 +18,32 @@ export default function HomePage() {
 
   return (
     <div>
-      <section className="relative mb-12 overflow-hidden rounded-2xl border border-border/70 bg-gradient-to-br from-card via-card to-accent/30 p-8 shadow-md ring-1 ring-black/[0.04] dark:from-card dark:via-card dark:to-primary/10 dark:ring-white/[0.06] sm:p-10">
+      <section className="relative mb-12 overflow-hidden border-4 border-black bg-[radial-gradient(circle,var(--comic-dot)_1.5px,transparent_1.6px)] bg-[length:10px_10px] bg-amber-200 p-8 shadow-[8px_8px_0_0_#000] [--comic-dot:rgba(0,0,0,0.14)] dark:border-black dark:bg-amber-200 dark:[--comic-dot:rgba(0,0,0,0.18)] sm:p-10">
         <div
-          className="pointer-events-none absolute -right-16 -top-24 size-72 rounded-full bg-primary/10 blur-3xl dark:bg-primary/20"
+          className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(-45deg,transparent,transparent_12px,rgba(0,0,0,0.06)_12px,rgba(0,0,0,0.06)_14px)]"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute -bottom-20 -left-12 size-56 rounded-full bg-secondary/60 blur-2xl dark:bg-secondary/30"
+          className="pointer-events-none absolute -right-8 top-0 size-24 rotate-12 border-4 border-black bg-yellow-400 shadow-[4px_4px_0_0_#000] sm:size-28"
           aria-hidden
         />
         <div className="relative">
-          <p className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary dark:border-primary/30 dark:bg-primary/15">
+          <p className="inline-flex max-w-full items-center border-4 border-black bg-white px-3 py-1.5 text-xs font-black uppercase tracking-widest text-black shadow-[4px_4px_0_0_#000]">
             New spring collection
           </p>
-          <h1 className="mt-4 max-w-3xl font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-[2.35rem] md:leading-tight">
+          <h1 className="mt-6 max-w-3xl font-heading text-3xl font-black uppercase leading-[1.05] tracking-tight text-black [text-shadow:3px_3px_0_#fde047] sm:text-4xl md:text-5xl">
             Single-origin chocolate, delivered to your door
           </h1>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+          <p className="mt-5 max-w-2xl border-4 border-black bg-white p-4 text-base font-semibold leading-snug text-black shadow-[4px_4px_0_0_#000]">
             Small-batch bars and truffles from growers in Peru, Madagascar, and Ecuador.
             Ethically sourced, freshly made, and shipped within 48 hours of leaving the kitchen.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              className={buttonVariants({ size: "lg", className: "min-h-10 px-5" })}
               href="/shop"
+              className={`${buttonVariants({ variant: "outline", size: "lg" })} min-h-10 rounded-none border-4 border-black bg-red-500 px-6 font-black uppercase tracking-wide text-white shadow-[5px_5px_0_0_#000] transition-[transform,box-shadow] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[3px_3px_0_0_#000] active:translate-x-1 active:translate-y-1 active:shadow-none`}
             >
-              Shop <ArrowRight className="ml-1 size-4" />
+              Shop <ArrowRight className="ml-1 size-4 stroke-[3]" />
             </Link>
           </div>
         </div>

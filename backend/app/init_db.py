@@ -28,6 +28,7 @@ async def _run() -> None:
                     price_cents=row["price_cents"],
                     image_url=row["image_url"],
                     tags=row["tags"],
+                    tasting_notes=row["tasting_notes"],
                     in_stock=True,
                 )
             )
