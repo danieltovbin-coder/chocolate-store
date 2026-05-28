@@ -15,6 +15,7 @@ class ChocolateOut(BaseModel):
     price_cents: int
     image_url: str
     tags: List[str]
+    tasting_notes: List[str]
     in_stock: bool
     created_at: datetime
 

@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import type { Chocolate } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
+import { tastingNoteHeatClasses } from "@/lib/tasting-note-heat";
 import { AddToCartControl } from "@/components/AddToCartControl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,22 @@ export function ChocolateCard({ chocolate: c }: Props) {
         <p className="mt-2 font-heading text-lg font-semibold tabular-nums text-foreground">
           {formatPrice(c.price_cents)}
         </p>
+        {c.tasting_notes.length > 0 && (
+          <div className="mt-3">
+            <p className="mb-1 text-xs text-muted-foreground">Tasting notes</p>
+            <div className="flex flex-wrap gap-1">
+              {c.tasting_notes.map((n) => (
+                <Badge
+                  key={n}
+                  variant="outline"
+                  className={`text-xs font-normal shadow-none ${tastingNoteHeatClasses(n)}`}
+                >
+                  {n}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
       </CardContent>
       <CardFooter className="flex gap-2 p-3">
         <AddToCartControl

@@ -15,6 +15,17 @@ def test_list_chocolates_returns_items(api_client: TestClient) -> None:
     assert "id" in first and "name" in first and "price_cents" in first
 
 
+def test_list_chocolates_returns_tasting_notes(api_client: TestClient) -> None:
+    r = api_client.get("/api/chocolates")
+    assert r.status_code == 200
+    items = r.json()
+    assert items
+    for row in items:
+        assert "tasting_notes" in row
+        assert isinstance(row["tasting_notes"], list)
+        assert all(isinstance(n, str) for n in row["tasting_notes"])
+
+
 def test_list_chocolates_tag_filter_or_semantics(api_client: TestClient) -> None:
     r = api_client.get("/api/chocolates", params=[("tag", "dark"), ("tag", "milk")])
     assert r.status_code == 200

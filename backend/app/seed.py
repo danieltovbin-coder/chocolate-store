@@ -25,6 +25,7 @@ SEED: list[dict] = [
         "price_cents": 899,
         "image_url": "https://images.unsplash.com/photo-1493925410384-84f842e616fb?w=600&q=80",
         "tags": ["dark", "single-origin", "70%"],
+        "tasting_notes": ["black tea", "fig", "toasted almond"],
     },
     {
         "name": "Madagascar Sambirano 85%",
@@ -34,6 +35,7 @@ SEED: list[dict] = [
         "price_cents": 1099,
         "image_url": "https://images.unsplash.com/photo-1511381939415-e44015466834?w=600&q=80",
         "tags": ["dark", "single-origin", "85%"],
+        "tasting_notes": ["red fruit", "smoke", "long finish"],
     },
     {
         "name": "Sea Salt Caramel Dark",
@@ -43,6 +45,7 @@ SEED: list[dict] = [
         "price_cents": 749,
         "image_url":"https://images.unsplash.com/photo-1772985433602-f2725a31d547?w=600&q=80",
         "tags": ["dark", "caramel", "salt"],
+        "tasting_notes": ["caramel", "sea salt"],
     },
     {
         "name": "Hazelnut Praline Milk",
@@ -52,6 +55,7 @@ SEED: list[dict] = [
         "price_cents": 799,
         "image_url": "https://images.unsplash.com/photo-1630953900279-8efae9d0e4d9?w=600&q=80",
         "tags": ["milk", "nutty", "praline"],
+        "tasting_notes": ["hazelnut", "praline", "milk"],
     },
     {
         "name": "Classic Milk Bar",
@@ -61,6 +65,7 @@ SEED: list[dict] = [
         "price_cents": 499,
         "image_url": "https://images.unsplash.com/photo-1619848566843-9027f3c7aac2?w=600&q=80",
         "tags": ["milk", "classic"],
+        "tasting_notes": ["creamy", "sweet", "balanced"],
     },
     {
         "name": "Ruby Berry Bar",
@@ -70,6 +75,7 @@ SEED: list[dict] = [
         "price_cents": 949,
         "image_url": "https://images.unsplash.com/photo-1608932586368-b4266fe7f98c?w=600&q=80",
         "tags": ["ruby", "fruity"],
+        "tasting_notes": ["berry", "tart"],
     },
     {
         "name": "White Chocolate & Pistachio",
@@ -79,6 +85,7 @@ SEED: list[dict] = [
         "price_cents": 899,
         "image_url": "https://images.unsplash.com/photo-1706167754832-78f1fda7226c?w=600&q=80",
         "tags": ["white", "nutty"],
+        "tasting_notes": ["pistachio", "vanilla"],
     },
     {
         "name": "Vegan Almond Dark",
@@ -88,6 +95,7 @@ SEED: list[dict] = [
         "price_cents": 849,
         "image_url": "https://images.unsplash.com/photo-1720029106261-0d0396bb270d?w=600&q=80",
         "tags": ["dark", "vegan", "almond"],
+        "tasting_notes": ["almond", "oat"],
     },
     {
         "name": "Raspberry Truffle Box (12)",
@@ -97,6 +105,7 @@ SEED: list[dict] = [
         "price_cents": 2499,
         "image_url": "https://images.unsplash.com/photo-1526823127573-0fda76b6c24f?w=600&q=80",
         "tags": ["gift", "truffle", "fruit"],
+        "tasting_notes": ["raspberry", "ganache"],
     },
     {
         "name": "Chili & Cinnamon Dark",
@@ -106,6 +115,7 @@ SEED: list[dict] = [
         "price_cents": 799,
         "image_url": "https://images.unsplash.com/photo-1601876819169-9ddf6f214a47?w=600&q=80",
         "tags": ["dark", "spicy"],
+        "tasting_notes": ["chili", "cinnamon", "warm spice"],
     },
     {
         "name": "Orange Zest 65%",
@@ -115,6 +125,7 @@ SEED: list[dict] = [
         "price_cents": 729,
         "image_url": "https://images.unsplash.com/photo-1611625309355-44750e8b3498?w=600&q=80",
         "tags": ["dark", "citrus"],
+        "tasting_notes": ["orange", "marmalade"],
     },
     {
         "name": "Fresh Mint Dark Bites",
@@ -124,6 +135,7 @@ SEED: list[dict] = [
         "price_cents": 899,
         "image_url": "https://images.unsplash.com/photo-1636450525985-f38e86fd4759?w=600&q=80",
         "tags": ["dark", "mint", "bites"],
+        "tasting_notes": ["mint"],
     },
     {
         "name": "Gianduja Spread Jar",
@@ -133,6 +145,7 @@ SEED: list[dict] = [
         "price_cents": 1299,
         "image_url": "https://images.unsplash.com/photo-1551578657-a7e74acb0135?w=600&q=80",
         "tags": ["spread", "hazelnut"],
+        "tasting_notes": ["hazelnut", "cocoa"],
     },
     {
         "name": "Cocoa Nibs Crunch 72%",
@@ -142,6 +155,7 @@ SEED: list[dict] = [
         "price_cents": 819,
         "image_url": "https://images.unsplash.com/photo-1587271644048-2fbb187de8d8?w=600&q=80",
         "tags": ["dark", "nibs", "textured"],
+        "tasting_notes": ["cocoa nibs", "roasted"],
     },
 ]
 
